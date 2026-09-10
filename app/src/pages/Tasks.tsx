@@ -82,7 +82,7 @@ export default function Tasks() {
                 </div>
               </div>
               <Badge color={prioColor[x.priority]}>{t(`prio_${x.priority}`)}</Badge>
-              <div className={`text-xs whitespace-nowrap ${late ? 'text-red-600 font-medium' : 'text-slate-500'}`} title={fmtDate(x.due_at, locale, true)}>{x.due_at ? relTime(x.due_at, locale) : ''}</div>
+              <div className={`text-xs whitespace-nowrap ${late ? 'text-black font-semibold underline underline-offset-2' : 'text-neutral-500'}`} title={fmtDate(x.due_at, locale, true)}>{x.due_at ? relTime(x.due_at, locale) : ''}</div>
             </div>
           )
         })}

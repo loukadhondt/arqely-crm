@@ -78,7 +78,7 @@ export default function Pipeline() {
   }
   const del = async (d: Deal) => { if (!confirm(t('confirm_delete'))) return; await supabase.from('deals').delete().eq('id', d.id); setEditing(null); load() }
 
-  const value = (d: Deal) => Number(d.amount) + Number(d.monthly_amount) * 12
+  const value = (d: Deal) => Number(d.amount)
   const visibleStages = stages.filter((s) => showClosed || (!s.is_won && !s.is_lost))
   const openTotal = deals.filter((d) => d.status === 'open').reduce((a, d) => a + value(d), 0)
 
@@ -94,7 +94,7 @@ export default function Pipeline() {
           const list = deals.filter((d) => d.stage_id === s.id)
           const total = list.reduce((a, d) => a + value(d), 0)
           return (
-            <div key={s.id} className={`w-72 shrink-0 rounded-xl p-2 ${s.is_won ? 'bg-emerald-50' : s.is_lost ? 'bg-slate-100' : 'bg-slate-100/70'}`}
+            <div key={s.id} className={`w-72 shrink-0 rounded-xl p-2 ${s.is_won ? 'bg-neutral-200' : s.is_lost ? 'bg-neutral-100 opacity-70' : 'bg-neutral-100'}`}
               onDragOver={(e) => e.preventDefault()} onDrop={() => { if (dragId) { moveTo(dragId, s); setDragId(null) } }}>
               <div className="flex items-center justify-between px-2 py-1 mb-1">
                 <div className="text-sm font-semibold">{locale === 'fr' ? s.name_fr : s.name_en} <span className="text-slate-400 font-normal">({list.length})</span></div>
@@ -103,7 +103,7 @@ export default function Pipeline() {
               <div className="space-y-2 min-h-[60px]">
                 {list.map((d) => (
                   <div key={d.id} draggable onDragStart={() => setDragId(d.id)} onClick={() => setEditing(d)}
-                    className="card p-3 cursor-grab active:cursor-grabbing hover:border-brand">
+                    className="card p-3 cursor-grab active:cursor-grabbing hover:border-black">
                     <div className="text-sm font-medium">{d.title}</div>
                     <div className="text-xs text-slate-500 mt-0.5">
                       {d.contact && <Link to={`/contacts/${d.contact.id}`} onClick={(e) => e.stopPropagation()} className="hover:underline">{contactName(d.contact)}</Link>}
@@ -129,7 +129,7 @@ export default function Pipeline() {
             <div className="flex flex-wrap gap-2">
               <Badge color={editing.status === 'won' ? 'green' : editing.status === 'lost' ? 'slate' : 'blue'}>{editing.status}</Badge>
               {editing.status === 'open' && <>
-                <button className="btn-secondary text-emerald-700" onClick={() => { moveTo(editing.id, stages.find((s) => s.is_won)!); setEditing(null) }}><Trophy size={14} /> {t('mark_won')}</button>
+                <button className="btn-secondary" onClick={() => { moveTo(editing.id, stages.find((s) => s.is_won)!); setEditing(null) }}><Trophy size={14} /> {t('mark_won')}</button>
                 <button className="btn-secondary" onClick={() => { setLostFor(editing); setEditing(null) }}><XCircle size={14} /> {t('mark_lost')}</button>
               </>}
               {editing.status !== 'open' && <button className="btn-secondary" onClick={() => { moveTo(editing.id, stages[0]); setEditing(null); load() }}><RotateCcw size={14} /> {t('reopen')}</button>}

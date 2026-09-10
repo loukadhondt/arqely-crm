@@ -68,7 +68,7 @@ export default function ContactDetail() {
           <div className="card p-4">
             <div className="flex gap-2 mb-2 flex-wrap">
               {(['note', 'call', 'email', 'meeting'] as const).map((tp) => (
-                <button key={tp} onClick={() => setActType(tp)} className={`btn text-xs ${actType === tp ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600'}`}>{t(`log_${tp}`)}</button>
+                <button key={tp} onClick={() => setActType(tp)} className={`btn text-xs ${actType === tp ? 'bg-black text-white' : 'bg-neutral-100 text-neutral-600'}`}>{t(`log_${tp}`)}</button>
               ))}
             </div>
             <input className="input mb-2" placeholder={t('title')} value={actSubject} onChange={(e) => setActSubject(e.target.value)} />

@@ -198,9 +198,9 @@ Deno.serve(async (req) => {
     // deal: reuse open deal or create in first stage
     let dealId: string | null = null;
     const { data: openDeal } = await supabase.from("deals").select("id, stage_id").eq("contact_id", contact.id).eq("status", "open").order("created_at", { ascending: false }).limit(1).maybeSingle();
-    const { data: stages } = await supabase.from("pipeline_stages").select("id, position, name_en").order("position");
+    const { data: stages } = await supabase.from("pipeline_stages").select("id, position, name_en, name_fr").order("position");
     const firstStage = stages?.[0];
-    const auditStage = stages?.find((s) => s.name_en.toLowerCase().includes("audit"));
+    const auditStage = stages?.find((s) => ["meeting","audit","rendez"].some((k) => s.name_en.toLowerCase().includes(k) || s.name_fr.toLowerCase().includes(k)));
     if (openDeal) {
       dealId = openDeal.id;
       if (source === "calcom" && auditStage) {

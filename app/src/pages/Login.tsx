@@ -26,14 +26,14 @@ export default function Login() {
     <div className="min-h-screen grid place-items-center p-4">
       <form onSubmit={submit} className="card w-full max-w-sm p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2"><div className="h-9 w-9 rounded-lg bg-brand text-white grid place-items-center font-bold">A</div><div className="font-semibold">Arqely CRM</div></div>
-          <div className="flex gap-1 text-xs">{(['fr', 'en'] as const).map((l) => <button type="button" key={l} onClick={() => setLocale(l)} className={`px-2 py-0.5 rounded ${locale === l ? 'bg-slate-900 text-white' : 'text-slate-500'}`}>{l.toUpperCase()}</button>)}</div>
+          <div className="flex items-center gap-2"><div className="h-9 w-9 rounded-lg bg-black text-white grid place-items-center font-bold">A</div><div className="font-semibold">Arqely CRM</div></div>
+          <div className="flex gap-1 text-xs">{(['fr', 'en'] as const).map((l) => <button type="button" key={l} onClick={() => setLocale(l)} className={`px-2 py-0.5 rounded ${locale === l ? 'bg-black text-white' : 'text-neutral-500'}`}>{l.toUpperCase()}</button>)}</div>
         </div>
-        <h1 className="text-lg font-semibold">{mode === 'in' ? t('login_title') : t('signup_title')}</h1>
+        <h1 className="text-lg font-semibold">{mode === 'in' ? t('login_title') : t('signup_title')}</h1><p className="text-xs text-neutral-500 -mt-2">Neo Move devient Arqely</p>
         {mode === 'up' && <Field label={t('full_name')}><input className="input" value={name} onChange={(e) => setName(e.target.value)} required /></Field>}
         <Field label={t('email')}><input className="input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></Field>
         <Field label={t('password')}><input className="input" type="password" value={pw} onChange={(e) => setPw(e.target.value)} required minLength={6} /></Field>
-        {msg && <div className="text-sm text-amber-700 bg-amber-50 rounded-lg p-2">{msg}</div>}
+        {msg && <div className="text-sm text-black bg-neutral-100 border border-neutral-300 rounded-lg p-2">{msg}</div>}
         <button className="btn-primary w-full justify-center" disabled={busy}>{mode === 'in' ? t('sign_in') : t('sign_up')}</button>
         <button type="button" className="text-sm text-slate-500 hover:text-slate-800 w-full" onClick={() => setMode(mode === 'in' ? 'up' : 'in')}>
           {mode === 'in' ? t('no_account') : t('have_account')}

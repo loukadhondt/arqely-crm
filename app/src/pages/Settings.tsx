@@ -12,6 +12,7 @@ export default function Settings() {
   const [members, setMembers] = useState<Profile[]>([]); const [settings, setSettings] = useState<Record<string, string>>({})
   const [services, setServices] = useState<Service[]>([]); const [events, setEvents] = useState<InboundEvent[]>([])
   const [name, setName] = useState(profile?.full_name ?? '')
+  const [memo, setMemo] = useState(''); const [memoSaved, setMemoSaved] = useState(false)
 
   const load = async () => {
     const [m, s, sv, ev] = await Promise.all([
@@ -22,6 +23,7 @@ export default function Settings() {
     ])
     setMembers((m.data ?? []) as Profile[]); setSettings(Object.fromEntries(((s.data ?? []) as { key: string; value: string }[]).map((x) => [x.key, x.value])))
     setServices((sv.data ?? []) as Service[]); setEvents((ev.data ?? []) as InboundEvent[])
+    const memoRow = ((s.data ?? []) as { key: string; value: string }[]).find((x) => x.key === 'team_memo'); if (memoRow) setMemo(memoRow.value)
   }
   useEffect(() => { load() }, [])
   useEffect(() => { setName(profile?.full_name ?? '') }, [profile])
@@ -49,6 +51,12 @@ export default function Settings() {
     <div>
       <PageHeader title={t('settings')} />
       <div className="grid lg:grid-cols-2 gap-4">
+        <div className="card p-5 space-y-3 lg:col-span-2">
+          <h2 className="font-semibold">{t('memo')}</h2>
+          <p className="text-xs text-neutral-500">{t('memo_help')}</p>
+          <textarea className="input font-mono text-xs leading-relaxed" rows={18} value={memo} onChange={(e) => { setMemo(e.target.value); setMemoSaved(false) }} />
+          <button className="btn-primary" onClick={async () => { await saveSetting('team_memo', memo); setMemoSaved(true) }}>{memoSaved ? '✓ ' : ''}{t('save')}</button>
+        </div>
         <div className="card p-5 space-y-3">
           <h2 className="font-semibold">{t('my_profile')}</h2>
           <Field label={t('full_name')}><input className="input" value={name} onChange={(e) => setName(e.target.value)} /></Field>

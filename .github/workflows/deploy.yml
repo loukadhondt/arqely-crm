@@ -13,16 +13,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app
+    defaults: { run: { working-directory: app } }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: app/package-lock.json
+        with: { node-version: 22, cache: npm, cache-dependency-path: app/package-lock.json }
       - run: npm ci
       - run: npm run build
         env:
@@ -31,14 +26,11 @@ jobs:
           VITE_SUPABASE_ANON_KEY: sb_publishable_z1ZewJ4TsZNu-1yP0maI8Q_9qUpUD0X
       - run: cp dist/index.html dist/404.html
       - uses: actions/upload-pages-artifact@v3
-        with:
-          path: app/dist
+        with: { path: app/dist }
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    environment: { name: github-pages, url: ${{ steps.deployment.outputs.page_url }} }
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4

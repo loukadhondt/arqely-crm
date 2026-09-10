@@ -73,7 +73,7 @@ export default function Subscriptions() {
         <button className="btn-primary" onClick={() => setOpen(true)}><Plus size={16} /> {t('new')}</button>
       </PageHeader>
       <div className="grid grid-cols-3 gap-3 mb-5">
-        <Stat label={t('total_mrr')} value={fmtMoney(mrr, locale)} tone="green" />
+        <Stat label={t('total_mrr')} value={fmtMoney(mrr, locale)} />
         <Stat label={t('active_clients')} value={new Set(active.map((s) => s.company_id)).size} />
         <Stat label={t('total_one_off')} value={fmtMoney(oneOff, locale)} />
       </div>

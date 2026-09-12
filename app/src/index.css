@@ -75,3 +75,26 @@
   .app-main { padding-top: 25px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+
+/* Neomove's original opening scene, kept behind the login content. */
+.login-story { position: relative; isolation: isolate; overflow: hidden; }
+.intro-scene { position: absolute; inset: 0; z-index: -1; background: #333; }
+.intro-media { position: absolute; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.intro-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(0 0 0 / .3), rgb(0 0 0 / .55) 55%, rgb(0 0 0 / .75)); }
+.intro-copy p, .intro-footer { color: #e5e5e5; }
+.intro-toggle { position: absolute; right: 32px; bottom: 30px; width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid #ffffff66; border-radius: 50%; color: white; background: #00000055; }
+.intro-toggle:hover { background: #000000aa; }
+@media (prefers-reduced-motion: no-preference) {
+  .intro-brand { animation: intro-appear 1.1s cubic-bezier(.68,0,.16,.97) both; }
+  .intro-copy { animation: intro-appear 1.2s .15s cubic-bezier(.68,0,.16,.97) both; }
+  .login-form { animation: intro-appear 1.1s .25s cubic-bezier(.68,0,.16,.97) both; }
+}
+@keyframes intro-appear { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 1023px) {
+  .login-story { display: flex; min-height: 220px; padding: 28px; gap: 28px; }
+  .login-story h2 { font-size: 30px; max-width: 340px; }
+  .intro-copy { padding-right: 42px; }
+  .intro-copy > p, .intro-footer { display: none; }
+  .intro-toggle { bottom: 22px; right: 22px; }
+  .login-form-side { padding-top: 36px; padding-bottom: 36px; }
+}

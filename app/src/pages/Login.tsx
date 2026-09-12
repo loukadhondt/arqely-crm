@@ -1,3 +1,4 @@
+import IntroScene from '../components/IntroScene'
 import Brand from '../components/Brand'
 import { useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
@@ -25,7 +26,7 @@ export default function Login() {
 
   return (
     <div className="login-page">
-      <aside className="login-story"><Brand /><div><p className="text-xs uppercase tracking-[0.2em] text-neutral-400 mb-7">{locale === 'fr' ? 'Votre espace de travail' : 'Your workspace'}</p><h2>{locale === 'fr' ? 'Moins de bruit. Plus de clarté.' : 'Less noise. More clarity.'}</h2><p className="text-neutral-400 text-sm leading-relaxed mt-7 max-w-sm">{locale === 'fr' ? 'Vos relations, vos projets et vos prochaines actions. Tout commence ici.' : 'Your relationships, projects and next steps. It all starts here.'}</p></div><p className="text-xs text-neutral-500">Arqely · {locale === 'fr' ? 'Espace équipe' : 'Team workspace'}</p></aside>
+      <aside className="login-story"><IntroScene /><div className="intro-brand"><Brand /></div><div className="intro-copy"><p className="text-xs uppercase tracking-[0.2em] text-neutral-400 mb-7">{locale === 'fr' ? 'Votre espace de travail' : 'Your workspace'}</p><h2>{locale === 'fr' ? 'Moins de bruit. Plus de clarté.' : 'Less noise. More clarity.'}</h2><p className="text-neutral-400 text-sm leading-relaxed mt-7 max-w-sm">{locale === 'fr' ? 'Vos relations, vos projets et vos prochaines actions. Tout commence ici.' : 'Your relationships, projects and next steps. It all starts here.'}</p></div><p className="intro-footer text-xs">Arqely · {locale === 'fr' ? 'Espace équipe' : 'Team workspace'}</p></aside>
       <div className="login-form-side">
       <form onSubmit={submit} className="login-form">
         <div className="flex items-center justify-between">

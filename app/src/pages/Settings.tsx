@@ -90,6 +90,7 @@ export default function Settings() {
 
         <div className="card p-5 lg:col-span-2">
           <h2 className="font-semibold mb-3">{t('services_catalog')}</h2>
+          <Link className="btn-secondary mb-4" to="/offers">{locale === 'fr' ? 'Nos offres détaillées →' : 'Detailed offers →'}</Link>
           <div className="space-y-2">
             {services.map((s) => (
               <div key={s.id} className="grid grid-cols-12 gap-2 items-center text-sm">

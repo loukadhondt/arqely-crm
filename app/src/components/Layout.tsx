@@ -1,3 +1,4 @@
+import Brand from './Brand'
 import { NavLink, Outlet } from 'react-router-dom'
 import { LayoutDashboard, Users, Building2, KanbanSquare, CheckSquare, Repeat, Settings, LogOut, Menu } from 'lucide-react'
 import { useState } from 'react'
@@ -16,6 +17,7 @@ export default function Layout() {
     { to: '/pipeline', icon: KanbanSquare, label: t('pipeline') },
     { to: '/tasks', icon: CheckSquare, label: t('tasks') },
     { to: '/subscriptions', icon: Repeat, label: t('subscriptions') },
+    { to: '/offers', icon: KanbanSquare, label: locale === 'fr' ? 'Nos offres' : 'Our offers' },
     { to: '/settings', icon: Settings, label: t('settings') },
   ]
   const Nav = () => (
@@ -31,10 +33,7 @@ export default function Layout() {
   return (
     <div className="min-h-screen md:flex">
       <aside className="hidden md:flex w-60 shrink-0 flex-col bg-black text-white p-4 sticky top-0 h-screen">
-        <div className="flex items-center gap-2 px-2 mb-6">
-          <div className="h-8 w-8 rounded-lg bg-white text-black grid place-items-center font-bold">A</div>
-          <div><div className="font-semibold leading-tight">Arqely CRM</div><div className="text-[11px] text-neutral-400">Neo Move devient Arqely</div></div>
-        </div>
+        <div className="px-2 mb-6"><Brand /></div>
         <Nav />
         <div className="mt-auto pt-4 border-t border-neutral-800 text-xs">
           <div className="px-2 text-neutral-300 truncate">{profile?.full_name ?? profile?.email} <span className="text-neutral-500">· {profile?.role === 'owner' ? 'admin' : (locale === 'fr' ? 'membre' : 'member')}</span></div>
@@ -49,7 +48,7 @@ export default function Layout() {
         </div>
       </aside>
       <div className="md:hidden bg-black text-white p-3 flex items-center justify-between">
-        <div className="font-semibold">Arqely CRM</div>
+        <Brand compact />
         <button onClick={() => setOpen(!open)}><Menu /></button>
       </div>
       {open && <div className="md:hidden bg-black p-3"><Nav /><button className="mt-3 text-neutral-400 text-sm flex items-center gap-1" onClick={() => supabase.auth.signOut()}><LogOut size={14} /> {t('logout')}</button></div>}

@@ -1,3 +1,4 @@
+import Offers from './pages/Offers'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { I18nProvider, useT } from './lib/i18n'
 import { AuthProvider, useAuth } from './lib/auth'
@@ -38,6 +39,7 @@ function Gate() {
         <Route path="tasks" element={<Tasks />} />
         <Route path="subscriptions" element={<Subscriptions />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="offers" element={<Offers />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Route>
     </Routes>

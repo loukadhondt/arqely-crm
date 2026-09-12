@@ -1,3 +1,4 @@
+import Brand from '../components/Brand'
 import { useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
 import { useT } from '../lib/i18n'
@@ -26,7 +27,7 @@ export default function Login() {
     <div className="min-h-screen grid place-items-center p-4">
       <form onSubmit={submit} className="card w-full max-w-sm p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2"><div className="h-9 w-9 rounded-lg bg-black text-white grid place-items-center font-bold">A</div><div className="font-semibold">Arqely CRM</div></div>
+          <Brand compact />
           <div className="flex gap-1 text-xs">{(['fr', 'en'] as const).map((l) => <button type="button" key={l} onClick={() => setLocale(l)} className={`px-2 py-0.5 rounded ${locale === l ? 'bg-black text-white' : 'text-neutral-500'}`}>{l.toUpperCase()}</button>)}</div>
         </div>
         <h1 className="text-lg font-semibold">{mode === 'in' ? t('login_title') : t('signup_title')}</h1><p className="text-xs text-neutral-500 -mt-2">Neo Move devient Arqely</p>

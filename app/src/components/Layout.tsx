@@ -1,7 +1,7 @@
 import Brand from './Brand'
-import { NavLink, Outlet } from 'react-router-dom'
-import { LayoutDashboard, Users, Building2, KanbanSquare, CheckSquare, Repeat, Settings, LogOut, Menu } from 'lucide-react'
-import { useState } from 'react'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { LayoutDashboard, Users, Building2, KanbanSquare, CheckSquare, Repeat, Settings, LogOut, Menu, X, Layers } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useT } from '../lib/i18n'
 import { useAuth } from '../lib/auth'
 import { supabase } from '../lib/supabase'
@@ -10,49 +10,41 @@ export default function Layout() {
   const { t, locale, setLocale } = useT()
   const { profile } = useAuth()
   const [open, setOpen] = useState(false)
-  const nav = [
-    { to: '/', icon: LayoutDashboard, label: t('dashboard') },
-    { to: '/contacts', icon: Users, label: t('contacts') },
-    { to: '/companies', icon: Building2, label: t('companies') },
-    { to: '/pipeline', icon: KanbanSquare, label: t('pipeline') },
-    { to: '/tasks', icon: CheckSquare, label: t('tasks') },
-    { to: '/subscriptions', icon: Repeat, label: t('subscriptions') },
-    { to: '/offers', icon: KanbanSquare, label: locale === 'fr' ? 'Nos offres' : 'Our offers' },
-    { to: '/settings', icon: Settings, label: t('settings') },
+  const location = useLocation()
+  const copy = (fr: string, en: string) => locale === 'fr' ? fr : en
+  useEffect(() => { setOpen(false) }, [location.pathname])
+  useEffect(() => {
+    const close = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
+    window.addEventListener('keydown', close)
+    return () => window.removeEventListener('keydown', close)
+  }, [])
+  const groups = [
+    { label: copy('Espace de travail', 'Workspace'), items: [
+      { to: '/', icon: LayoutDashboard, label: copy('Vue d’ensemble', 'Overview') },
+      { to: '/tasks', icon: CheckSquare, label: t('tasks') },
+      { to: '/subscriptions', icon: Repeat, label: t('subscriptions') },
+    ] },
+    { label: copy('Développement', 'Business'), items: [
+      { to: '/pipeline', icon: KanbanSquare, label: t('pipeline') },
+      { to: '/contacts', icon: Users, label: t('contacts') },
+      { to: '/companies', icon: Building2, label: t('companies') },
+      { to: '/offers', icon: Layers, label: copy('Nos offres', 'Our offers') },
+    ] },
   ]
-  const Nav = () => (
-    <nav className="flex flex-col gap-1">
-      {nav.map((n) => (
-        <NavLink key={n.to} to={n.to} end={n.to === '/'} onClick={() => setOpen(false)}
-          className={({ isActive }) => `flex items-center gap-3 rounded-lg px-3 py-2 text-sm ${isActive ? 'bg-white text-black font-medium' : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'}`}>
-          <n.icon size={18} /> {n.label}
-        </NavLink>
-      ))}
-    </nav>
-  )
-  return (
-    <div className="min-h-screen md:flex">
-      <aside className="hidden md:flex w-60 shrink-0 flex-col bg-black text-white p-4 sticky top-0 h-screen">
-        <div className="px-2 mb-6"><Brand /></div>
-        <Nav />
-        <div className="mt-auto pt-4 border-t border-neutral-800 text-xs">
-          <div className="px-2 text-neutral-300 truncate">{profile?.full_name ?? profile?.email} <span className="text-neutral-500">· {profile?.role === 'owner' ? 'admin' : (locale === 'fr' ? 'membre' : 'member')}</span></div>
-          <div className="flex items-center justify-between px-2 mt-2">
-            <div className="flex gap-1">
-              {(['fr', 'en'] as const).map((l) => (
-                <button key={l} onClick={() => setLocale(l)} className={`px-2 py-0.5 rounded ${locale === l ? 'bg-neutral-700 text-white' : 'text-neutral-500 hover:text-white'}`}>{l.toUpperCase()}</button>
-              ))}
-            </div>
-            <button className="text-neutral-400 hover:text-white flex items-center gap-1" onClick={() => supabase.auth.signOut()}><LogOut size={14} /> {t('logout')}</button>
-          </div>
-        </div>
-      </aside>
-      <div className="md:hidden bg-black text-white p-3 flex items-center justify-between">
-        <Brand compact />
-        <button onClick={() => setOpen(!open)}><Menu /></button>
+  const navItem = (n: typeof groups[number]['items'][number]) => <NavLink key={n.to} to={n.to} end={n.to === '/'} onClick={() => setOpen(false)} className={({ isActive }) => `nav-item ${isActive ? 'is-active' : ''}`}><n.icon size={18} strokeWidth={1.6} /><span>{n.label}</span></NavLink>
+  return <div className="app-shell">
+    <a href="#main-content" className="skip-link">{copy('Aller au contenu', 'Skip to content')}</a>
+    <header className="mobile-header"><Brand compact /><button className="btn-ghost" aria-label={copy('Menu de navigation', 'Navigation menu')} aria-expanded={open} aria-controls="app-sidebar" onClick={() => setOpen(!open)}>{open ? <X size={21} /> : <Menu size={21} />}</button></header>
+    {open && <button className="sidebar-backdrop" aria-label={copy('Fermer le menu', 'Close menu')} onClick={() => setOpen(false)} />}
+    <aside id="app-sidebar" className={`app-sidebar ${open ? 'is-open' : ''}`}>
+      <div className="sidebar-brand"><Brand /></div>
+      <nav aria-label={copy('Navigation principale', 'Main navigation')} className="space-y-7">{groups.map(group => <div key={group.label}><p className="nav-caption">{group.label}</p><div className="space-y-1">{group.items.map(navItem)}</div></div>)}</nav>
+      <div className="sidebar-footer">
+        {navItem({ to: '/settings', icon: Settings, label: t('settings') })}
+        <div className="profile-block"><div className="profile-avatar">{(profile?.full_name ?? profile?.email ?? 'A').slice(0, 1).toUpperCase()}</div><div className="min-w-0"><p className="truncate text-xs font-medium">{profile?.full_name ?? profile?.email ?? 'Arqely'}</p><p className="text-[11px] text-neutral-500 mt-1">{profile?.role === 'owner' ? copy('Administrateur', 'Administrator') : copy('Équipe Arqely', 'Arqely team')}</p></div></div>
+        <div className="flex items-center justify-between px-2"><div className="language-switch">{(['fr', 'en'] as const).map(l => <button key={l} aria-pressed={locale === l} onClick={() => setLocale(l)}>{l.toUpperCase()}</button>)}</div><button className="btn-ghost !px-2" aria-label={t('logout')} title={t('logout')} onClick={() => supabase.auth.signOut()}><LogOut size={16} /></button></div>
       </div>
-      {open && <div className="md:hidden bg-black p-3"><Nav /><button className="mt-3 text-neutral-400 text-sm flex items-center gap-1" onClick={() => supabase.auth.signOut()}><LogOut size={14} /> {t('logout')}</button></div>}
-      <main className="flex-1 min-w-0 p-4 md:p-8"><Outlet /></main>
-    </div>
-  )
+    </aside>
+    <main id="main-content" tabIndex={-1} className="app-main"><div className="workspace-content"><Outlet /></div></main>
+  </div>
 }

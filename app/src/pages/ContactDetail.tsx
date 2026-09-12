@@ -45,7 +45,7 @@ export default function ContactDetail() {
       <div className="flex flex-wrap items-start justify-between gap-3 mb-5">
         <div>
           <div className="text-sm text-slate-500"><Link to="/contacts" className="hover:underline">{t('contacts')}</Link> /</div>
-          <h1 className="text-2xl font-semibold">{contactName(c)}</h1>
+          <h1 className="page-title">{contactName(c)}</h1>
           <div className="flex flex-wrap items-center gap-2 mt-1 text-sm text-slate-600">
             <Badge color={statusColor[c.status]}>{t(`status_${c.status}`)}</Badge>
             <Badge color="violet">{t(`src_${c.source}` as 'src_manual')}</Badge>

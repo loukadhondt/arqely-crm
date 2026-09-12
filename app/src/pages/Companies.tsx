@@ -97,7 +97,7 @@ export function CompanyDetail() {
       <div className="flex flex-wrap items-start justify-between gap-3 mb-5">
         <div>
           <div className="text-sm text-slate-500"><Link to="/companies" className="hover:underline">{t('companies')}</Link> /</div>
-          <h1 className="text-2xl font-semibold">{c.name}</h1>
+          <h1 className="page-title">{c.name}</h1>
           <div className="text-sm text-slate-600 flex flex-wrap gap-2 mt-1 items-center">
             {c.industry && <Badge>{c.industry}</Badge>}{c.city && <span><MapPin size={12} className="inline" /> {c.city}</span>}
             {c.website && <a href={c.website.startsWith('http') ? c.website : `https://${c.website}`} target="_blank" rel="noreferrer" className="hover:underline flex items-center gap-1">{c.website} <ExternalLink size={12} /></a>}

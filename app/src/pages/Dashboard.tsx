@@ -122,7 +122,7 @@ export default function Dashboard() {
       <p className="text-sm text-slate-500 mb-5">{onlyMine ? copy('Vue de vos éléments attribués.', 'Your assigned items.') : copy('Vue de toute l’équipe, y compris les éléments non attribués.', 'Whole-team overview, including unassigned items.')}</p>
       {error && <div role="alert" className="card p-3 mb-4 text-sm">{error}</div>}
       <ActionOverview tasks={tasks} deals={deals} contacts={allContacts} subscriptions={allSubs} loading={loading} failed={Boolean(error)} owner={onlyMine ? profile?.id : undefined} onEdit={setEditing} />
-      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 mb-6" aria-label={copy('Filtrer les missions', 'Filter tasks')}>
+      <details className="planning-section"><summary>{copy('Planifier mes missions', 'Plan my tasks')}</summary><div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 mb-6" aria-label={copy('Filtrer les missions', 'Filter tasks')}>
         {[{ id: 'all', label: copy('Missions à faire', 'Tasks to do'), items: myTasks }, ...groups].map(g => (
           <button key={g.id} aria-pressed={filter === g.id} onClick={() => setFilter(g.id)} className={`rounded-xl border p-4 text-left transition-colors ${filter === g.id ? 'bg-black text-white border-black' : 'bg-white border-slate-200 hover:border-neutral-400'}`}>
             <div className="text-xs">{g.label}</div><div className="text-2xl font-semibold mt-2">{loading ? '—' : g.items.length}</div>
@@ -180,7 +180,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <h2 className="font-semibold mt-8 mb-3">{copy('Vue commerciale', 'Business overview')}</h2>
+      </details><h2 className="font-semibold mt-8 mb-3">{copy('Vue commerciale', 'Business overview')}</h2>
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-6">
         <Stat label={t('overdue')} value={overdue.length} tone={overdue.length ? 'red' : undefined} />
         <Stat label={t('signed_total')} value={fmtMoney(signed, locale)} sub={`${wonDeals.length} ${t('won_deals')} · ${t('excl_vat')}`} tone="green" />

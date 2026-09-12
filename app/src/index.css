@@ -3,17 +3,75 @@
 @tailwind utilities;
 
 @layer base {
-  html { -webkit-font-smoothing: antialiased; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  html { -webkit-font-smoothing: antialiased; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; color: #202020; background: #fafafa; }
+  body { margin: 0; }
+  ::selection { background: #dedede; color: #111; }
+  :focus-visible { outline: 2px solid #525252; outline-offset: 3px; }
+  input[type="checkbox"] { accent-color: #171717; width: 15px; height: 15px; }
+  button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+  summary { list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; float: right; font-size: 18px; font-weight: 400; margin-left: 12px; }
+  details[open] > summary::after { content: '−'; }
+  table th { font-weight: 500; white-space: nowrap; }
+  table td, table th { padding-top: 15px !important; padding-bottom: 15px !important; }
+  table tbody tr { transition: background-color 150ms; }
 }
 
 @layer components {
-  .btn { @apply inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition disabled:opacity-50 disabled:cursor-not-allowed; }
-  .btn-primary { @apply btn bg-black text-white hover:bg-neutral-800; }
-  .btn-secondary { @apply btn bg-white border border-slate-200 text-slate-700 hover:bg-slate-50; }
-  .btn-ghost { @apply btn text-slate-600 hover:bg-slate-100; }
-  .btn-danger { @apply btn bg-white border border-neutral-300 text-neutral-700 hover:bg-neutral-100; }
-  .input { @apply w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-black focus:ring-2 focus:ring-black/10; }
-  .label { @apply block text-xs font-medium text-slate-500 mb-1; }
-  .card { @apply bg-white rounded-xl border border-slate-200 shadow-sm; }
-  .badge { @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium; }
+  .btn { @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-xs font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-primary { @apply btn bg-neutral-900 text-white hover:bg-neutral-700; }
+  .btn-secondary { @apply btn bg-white border border-neutral-200 text-neutral-700 hover:bg-neutral-50 hover:border-neutral-300; }
+  .btn-ghost { @apply btn text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900; }
+  .btn-danger { @apply btn bg-white border border-neutral-300 text-neutral-800 hover:bg-neutral-100; }
+  .input { @apply w-full min-w-0 rounded-lg border border-neutral-200 bg-white px-3.5 py-2.5 text-sm outline-none transition-colors placeholder:text-neutral-400 focus:border-neutral-500 focus:ring-2 focus:ring-neutral-900/5; }
+  .label { @apply block text-xs font-medium text-neutral-600 mb-2; }
+  .card { @apply bg-white rounded-2xl border border-neutral-200/80; }
+  .badge { @apply inline-flex items-center rounded-md px-2 py-1 text-[11px] font-medium; }
+  .page-header { @apply flex flex-wrap items-start justify-between gap-5 mb-7; }
+  .page-title { @apply text-3xl font-semibold tracking-tight leading-tight; }
+  .page-controls { @apply flex flex-wrap items-center gap-2; }
+  .stat-card { @apply p-5; }
+  .stat-value { @apply text-2xl font-medium tracking-tight tabular-nums mt-3; }
+  .app-shell { @apply min-h-screen md:flex; }
+  .app-sidebar { @apply hidden md:flex w-[244px] shrink-0 flex-col bg-white border-r border-neutral-200/80 px-4 py-7 sticky top-0 h-screen; }
+  .sidebar-brand { @apply px-3 mb-12; }
+  .nav-caption { @apply px-3 mb-3 text-[10px] font-medium uppercase tracking-[0.14em] text-neutral-500; }
+  .nav-item { @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs text-neutral-500 transition-colors hover:bg-neutral-50 hover:text-neutral-900; }
+  .nav-item.is-active { @apply bg-neutral-100 text-neutral-950 font-semibold; }
+  .sidebar-footer { @apply mt-auto pt-8; }
+  .profile-block { @apply flex items-center gap-3 mx-2 mt-5 mb-3 pt-5 border-t border-neutral-100; }
+  .profile-avatar { @apply w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-xs font-medium shrink-0; }
+  .language-switch { @apply inline-flex rounded-lg bg-neutral-100 p-0.5; }
+  .language-switch button { @apply px-2 py-1.5 text-[10px] rounded-md text-neutral-500; }
+  .language-switch button[aria-pressed="true"] { @apply bg-white text-neutral-900 shadow-sm; }
+  .app-main { @apply flex-1 min-w-0 px-5 py-8 md:px-9 md:py-10 xl:px-12; }
+  .workspace-content { @apply mx-auto max-w-[1440px]; }
+  .mobile-header { @apply h-[74px] md:hidden flex items-center justify-between bg-white px-5 py-3 border-b border-neutral-200 sticky top-0 z-40; }
+  .sidebar-backdrop { @apply fixed inset-0 top-[74px] z-30 bg-black/20 md:hidden; }
+  .skip-link { @apply fixed left-4 top-4 z-[60] bg-black text-white rounded-lg px-4 py-2 -translate-y-24 focus:translate-y-0; }
+  .overview-panel { @apply p-5 sm:p-7 mb-7; }
+  .filter-tabs { @apply flex flex-wrap gap-1 border-b border-neutral-100 my-5 pb-2; }
+  .filter-tab { @apply px-3 py-2 text-xs rounded-lg text-neutral-500 transition-colors hover:bg-neutral-50; }
+  .filter-tab[aria-pressed="true"] { @apply bg-neutral-100 text-neutral-950 font-medium; }
+  .action-row { @apply border-b border-neutral-100 last:border-0 py-4 flex flex-wrap items-center gap-3; }
+  .action-row .btn-secondary { @apply border-transparent bg-neutral-50 hover:bg-neutral-100; }
+  .planning-section { @apply mb-7; }
+  .planning-section > summary { @apply text-sm font-medium py-4 border-b border-neutral-200 mb-5 cursor-pointer; }
+  .offer-card { @apply p-6 sm:p-7 transition-colors hover:border-neutral-400; }
+  .offer-card details { @apply border-t border-neutral-100 pt-3 mt-5; }
+  .login-page { @apply min-h-screen grid lg:grid-cols-2 bg-white; }
+  .login-story { @apply hidden lg:flex flex-col justify-between bg-neutral-950 text-white p-14; }
+  .login-story h2 { @apply text-5xl xl:text-6xl font-medium tracking-tight leading-[1.08] max-w-lg; }
+  .login-form-side { @apply flex items-center justify-center p-6 sm:p-12; }
+  .login-form { @apply w-full max-w-[360px] space-y-5; }
 }
+@media (max-width: 767px) {
+  .app-sidebar.is-open { display: flex; position: fixed; top: 74px; bottom: 0; height: calc(100dvh - 74px); z-index: 40; width: min(290px, 85vw); overflow-y: auto; }
+  .app-sidebar .sidebar-brand { display: none; }
+  .page-controls { width: 100%; }
+  .page-controls .input { flex: 1 1 140px; width: 100%; }
+  .page-title { font-size: 27px; }
+  .app-main { padding-top: 25px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }

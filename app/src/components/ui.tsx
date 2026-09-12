@@ -12,7 +12,7 @@ export function Modal({ open, onClose, title, children, wide }: { open: boolean;
   }, [open, onClose])
   if (!open) return null
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 p-4 overflow-y-auto" onMouseDown={onClose}>
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/30 backdrop-blur-sm p-4 overflow-y-auto" onMouseDown={onClose}>
       <div className={`card w-full ${wide ? 'max-w-4xl' : 'max-w-lg'} mt-8`} onMouseDown={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3">
           <h3 className="font-semibold">{title}</h3>
@@ -43,9 +43,9 @@ export function Empty({ text }: { text?: string }) {
 
 export function PageHeader({ title, children }: { title: string; children?: ReactNode }) {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-      <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-      <div className="flex items-center gap-2">{children}</div>
+    <div className="page-header">
+      <h1 className="page-title">{title}</h1>
+      <div className="page-controls">{children}</div>
     </div>
   )
 }
@@ -78,9 +78,9 @@ export function CopyButton({ text }: { text: string }) {
 export function Stat({ label, value, sub, tone }: { label: string; value: ReactNode; sub?: ReactNode; tone?: 'red' | 'amber' | 'green' }) {
   const toneCls = tone === 'red' ? 'text-black underline decoration-2 underline-offset-4' : tone === 'amber' ? 'text-neutral-700' : tone === 'green' ? 'text-black' : ''
   return (
-    <div className="card p-4">
+    <div className="card stat-card">
       <div className="text-xs text-slate-500">{label}</div>
-      <div className={`text-2xl font-semibold mt-1 ${toneCls}`}>{value}</div>
+      <div className={`stat-value ${toneCls}`}>{value}</div>
       {sub && <div className="text-xs text-slate-400 mt-1">{sub}</div>}
     </div>
   )

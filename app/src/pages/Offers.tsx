@@ -1,7 +1,8 @@
+import OfferPackages from '../components/OfferPackages'
 import OfferPolicy from '../components/OfferPolicy'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../lib/auth'
-import { useT, fmtMoney } from '../lib/i18n'
+import { useT } from '../lib/i18n'
 import { supabase } from '../lib/supabase'
 import { defaultOffers, offerFields, validOffer, type Offer, type OfferCopy } from '../lib/offers'
 import { PageHeader, Modal } from '../components/ui'
@@ -21,7 +22,7 @@ export default function Offers() {
  const visible=offers.filter(o=>Object.values(o[locale]).join(' ').toLocaleLowerCase(locale).includes(query.toLocaleLowerCase(locale)))
  const updateText=(field:keyof OfferCopy,text:string)=>setEditing(o=>o?{...o,[locale]:{...o[locale],[field]:text}}:o)
  return <div><PageHeader title={copy('Nos offres','Our offers')}><button className="btn-secondary" disabled={loading} onClick={load}>{copy('Actualiser','Refresh')}</button></PageHeader>
- <div className="mb-7 max-w-3xl"><p className="font-medium">{copy('6 offres · Création, acquisition et automatisation','6 offers · Creation, acquisition and automation')}</p><p className="text-sm text-neutral-500 mt-2">{copy('Forfaits standards : le périmètre est confirmé avant signature ; un projet plus complexe reçoit un prix fixe adapté. Installation et abonnement sont séparés ; budgets publicitaires et frais tiers sont précisés dans chaque fiche.','Standard packages: scope is confirmed before signing; more complex projects receive an adjusted fixed quote. Setup and subscription are separate; advertising spend and third-party costs are stated in each offer.')}</p><p className="text-xs text-neutral-500 mt-2">{copy('Ces fiches détaillées ne modifient pas les tarifs ni les abonnements déjà enregistrés dans le catalogue de facturation.','These detailed offers do not change existing billing catalogue prices or subscriptions.')}</p></div>
+ <OfferPackages /><div id="individual-offers" className="mb-7 max-w-3xl scroll-mt-6"><p className="font-medium">{copy('6 offres · Création, acquisition et automatisation','6 offers · Creation, acquisition and automation')}</p><p className="text-sm text-neutral-500 mt-2">{copy('Forfaits standards : le périmètre est confirmé avant signature ; un projet plus complexe reçoit un prix fixe adapté. Installation et abonnement sont séparés ; budgets publicitaires et frais tiers sont précisés dans chaque fiche.','Standard packages: scope is confirmed before signing; more complex projects receive an adjusted fixed quote. Setup and subscription are separate; advertising spend and third-party costs are stated in each offer.')}</p><p className="text-xs text-neutral-500 mt-2">{copy('Ces fiches détaillées ne modifient pas les tarifs ni les abonnements déjà enregistrés dans le catalogue de facturation.','These detailed offers do not change existing billing catalogue prices or subscriptions.')}</p></div>
  <OfferPolicy />
  {saved&&<p role="status" className="mb-4">{saved}</p>}
  {error&&<div role="alert" className="card p-4 mb-4">{error}<p>{copy('Les fiches proposées ci-dessous ne reflètent peut-être pas les dernières modifications. Édition désactivée : actualisez pour réessayer.','Proposed offers below may not reflect recent changes. Editing disabled: refresh to retry.')}</p></div>}

@@ -98,3 +98,37 @@
   .intro-toggle { bottom: 22px; right: 22px; }
   .login-form-side { padding-top: 36px; padding-bottom: 36px; }
 }
+
+/* Neo Move-inspired editorial packages, within the Arqely catalogue. */
+.packs-hero { position: relative; overflow: hidden; border-radius: 24px; background: #161616 url('https://framerusercontent.com/images/ctCMfaJ7W97DwXhjHokcBuxuf4.png?width=1416&height=896') center 48% / cover; color: white; margin-bottom: 24px; }
+.packs-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg,rgba(0,0,0,.85),rgba(0,0,0,.2)); }
+.packs-hero-content { position: relative; padding: clamp(28px,5vw,64px); max-width: 760px; }
+.packs-eyebrow { font-size: 10px; letter-spacing: .22em; font-weight: 600; }
+.packs-hero h2 { font-size: clamp(38px,5.5vw,76px); line-height: 1.02; letter-spacing: -.055em; font-weight: 500; margin: 24px 0; }
+.packs-hero h2 span { color: #c5c5c5; }
+.packs-hero-content > p:not(.packs-eyebrow) { font-size: 14px; line-height: 1.6; max-width: 340px; color: #ddd; }
+.packs-link { display: inline-flex; align-items: center; gap: 12px; border: 1px solid #777; border-radius: 999px; padding: 11px 16px; margin-top: 24px; font-size: 12px; background: #ffffff0a; }
+.packs-link:hover { background: #ffffff20; }
+.packs-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.pack-card { padding: 28px; border: 1px solid #e5e5e5; border-radius: 22px; background: white; display: flex; flex-direction: column; }
+.pack-featured { background: #171717; color: white; border-color: #171717; }
+.pack-topline { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; min-height: 38px; font-size: 11px; }
+.pack-badge { border: 1px solid #555; border-radius: 999px; padding: 5px 8px; font-size: 9px; }
+.pack-card h3 { font-size: 24px; line-height: 1.15; letter-spacing: -.035em; margin: 22px 0 12px; min-height: 56px; font-weight: 500; }
+.pack-description { font-size: 13px; color: #737373; line-height: 1.6; min-height: 64px; }
+.pack-featured .pack-description,.pack-featured .pack-saving { color: #bdbdbd; }
+.pack-price { margin-top: 24px; display: flex; flex-direction: column; gap: 3px; }
+.pack-price strong { font-size: clamp(28px,3vw,38px); letter-spacing: -.045em; font-weight: 500; }
+.pack-price > span { font-size: 11px; opacity: .65; }
+.pack-monthly { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; margin-top: 14px; font-size: 12px; }
+.pack-monthly strong { font-size: 19px; font-weight: 500; }
+.pack-card ul { display: grid; gap: 12px; margin: 26px 0; font-size: 12px; }
+.pack-card li { display: flex; align-items: flex-start; gap: 10px; }
+.pack-card li svg { flex-shrink: 0; }
+.pack-saving { font-size: 11px; line-height: 1.6; color: #737373; margin-top: auto; padding-bottom: 20px; }
+.pack-card details { border-top: 1px solid #8884; font-size: 12px; }
+.pack-card summary { cursor: pointer; padding-top: 16px; }
+.pack-details h4 { font-weight: 600; margin-top: 18px; }
+.pack-details p { line-height: 1.7; opacity: .75; margin-top: 6px; }
+.packs-note { font-size: 11px; line-height: 1.8; color: #737373; margin: 18px 0 24px; }
+@media (max-width: 1100px) { .packs-grid { grid-template-columns: 1fr; } .pack-card h3,.pack-description { min-height: 0; } }

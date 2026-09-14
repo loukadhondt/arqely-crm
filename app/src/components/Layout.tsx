@@ -28,6 +28,7 @@ export default function Layout() {
       { to: '/pipeline', icon: KanbanSquare, label: t('pipeline') },
       { to: '/contacts', icon: Users, label: t('contacts') },
       { to: '/companies', icon: Building2, label: t('companies') },
+      { to: '/client-videos', icon: Layers, label: copy('Vidéos clients', 'Client videos') },
       { to: '/offers', icon: Layers, label: copy('Nos offres', 'Our offers') },
     ] },
   ]
